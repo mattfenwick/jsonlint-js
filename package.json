@@ -1,0 +1,35 @@
+{
+  "name": "jsonlint-js",
+  "version": "0.0.1",
+  "description": "extended linting of JSON-formatted text",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "unparse-js": "0.1.4"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.9.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattfenwick/jsonlint-js.git"
+  },
+  "keywords": [
+    "JSON",
+    "lint",
+    "parse",
+    "parsing"
+  ],
+  "author": "Matt Fenwick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattfenwick/jsonlint-js/issues"
+  },
+  "homepage": "https://github.com/mattfenwick/jsonlint-js"
+}
