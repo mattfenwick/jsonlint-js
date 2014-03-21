@@ -1,6 +1,6 @@
 {
   "name": "jsonlint-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "extended linting of JSON-formatted text",
   "main": "index.js",
   "directories": {
