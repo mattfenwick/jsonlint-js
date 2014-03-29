@@ -1,6 +1,6 @@
 {
   "name": "jsonlint-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "extended linting of JSON-formatted text",
   "main": "index.js",
   "directories": {
@@ -11,10 +11,12 @@
   },
   "devDependencies": {
     "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.9.2"
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-jshint": "~0.9.2",
+    "mocha": "1.18.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
