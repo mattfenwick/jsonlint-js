@@ -16,7 +16,8 @@ module("validator", function() {
     });
     
     test("unexpected error", function() {
-        fail('not sure how to test this');
+        // not sure how to test this
+        deepEqual(true, false);
     });
     
     test("ast error", function() {
