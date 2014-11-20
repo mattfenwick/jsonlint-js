@@ -1,6 +1,6 @@
 "use strict";
 
-var V = require('../lib/validator'),
+var V = require('../index'),
     assert = require('assert');
 
 var module = describe,
