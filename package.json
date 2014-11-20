@@ -16,6 +16,7 @@
     "mocha": "1.18.2"
   },
   "scripts": {
+    "grunt": "grunt --force",
     "test": "mocha --reporter spec"
   },
   "repository": {
