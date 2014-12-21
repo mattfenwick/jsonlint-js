@@ -9,32 +9,35 @@ var e = JT.make_error,
     deepEqual = assert.deepEqual;
 
 
-function number(sign, int, dec, exp, pos) {
+function number(sign, int, dec, exp, start, end) {
     return {
-        '_name': 'number',
-        '_state': pos,
-        'sign': sign,
+        '_name' : 'number',
+        '_start': start,
+        '_end'  : end,
+        'sign'  : sign,
         'integer': int,
         'decimal': dec,
         'exponent': exp
     };
 }
 
-function keyword(value, pos) {
+function keyword(value, start, end) {
     return {
         '_name': 'keyword',
-        '_state': pos,
+        '_start': start,
+        '_end'  : end,
         'value': value
     };
 }
 
-function keyval(key, val, pos) {
+function keyval(key, val, start, end) {
     return {
-        '_name': 'key/val pair',
-        '_state': pos,
-        'key': key,
-        'value': val,
-        'colon': ':'
+        '_name' : 'key/val pair',
+        '_start': start,
+        '_end'  : end,
+        'key'   : key,
+        'value' : val,
+        'colon' : ':'
     };
 }
 
@@ -44,23 +47,23 @@ module("treechecker", function() {
     // n -> number, k -> keyword, c -> char, s -> string, a -> array, o -> object
     var in1 = number(null, ['3', '1'], null, null),
         in2 = number(null, ['0'], null, null),
-        in4 = number(null, ['8'], null, {'_name': 'exponent', 'letter': 'e', 'sign': '+', 'power': ['8', '7', '2']}, [2,4]),
-        in5 = number('-', ['2'], null, {'_name': 'exponent', 'letter': 'e', 'sign': '-', 'power': ['5', '6', '4']}, [1,7]),
+        in4 = number(null, ['8'], null, {'_name': 'exponent', 'letter': 'e', 'sign': '+', 'power': ['8', '7', '2']}, [2,4], [2,10]),
+        in5 = number('-', ['2'], null, {'_name': 'exponent', 'letter': 'e', 'sign': '-', 'power': ['5', '6', '4']}, [1,7], [1,14]),
         ik1 = keyword('true'),
         ik2 = keyword('false'),
         ik3 = keyword('null'),
-        ic1 = {'_name': 'character', '_state': null, 'value': 'c'},
-        ic3 = {'_name': 'escape', '_state': null, 'open': '\\', 'value': 'n'},
-        ic5 = {'_name': 'unicode escape', '_state': null, 'open': '\\u', 'value': ['0', '0', '6', '4']},
-        is1 = {'_name': 'string', '_state': [3,8], 'open': '"', 'close': '"', 'value': [ic1, ic3, ic5]},
-        ia1 = {'_name': 'array', '_state': null, 'body': {'values': []}},
-        ia2 = {'_name': 'array', '_state': null, 'body': {'values': [in1, ik2]}},
-        ia3 = {'_name': 'array', '_state': null, 'body': {'values': [ia1]}},
-        ia4 = {'_name': 'array', '_state': null, 'body': {'values': [in4, in5]}},
-        io1 = {'_name': 'object', '_state': null, 'body': {'values': []}},
-        io2 = {'_name': 'object', '_state': null, 'body': {'values': [keyval(is1, io1)]}},
-        io3 = {'_name': 'object', '_state': null, 'body': {'values': [keyval(is1, in4)]}},
-        io4 = {'_name': 'object', '_state': null, 'body': {'values': [keyval(is1, in1), keyval(is1, io1)]}};
+        ic1 = {'_name': 'character', '_start': null, 'value': 'c'},
+        ic3 = {'_name': 'escape', '_start': null, 'open': '\\', 'value': 'n'},
+        ic5 = {'_name': 'unicode escape', '_start': null, 'open': '\\u', 'value': ['0', '0', '6', '4']},
+        is1 = {'_name': 'string', '_start': [3,8], 'open': '"', 'close': '"', 'value': [ic1, ic3, ic5]},
+        ia1 = {'_name': 'array' , '_start': null, 'body': {'values': []}},
+        ia2 = {'_name': 'array' , '_start': null, 'body': {'values': [in1, ik2]}},
+        ia3 = {'_name': 'array' , '_start': null, 'body': {'values': [ia1]}},
+        ia4 = {'_name': 'array' , '_start': null, 'body': {'values': [in4, in5]}},
+        io1 = {'_name': 'object', '_start': null, 'body': {'values': []}},
+        io2 = {'_name': 'object', '_start': null, 'body': {'values': [keyval(is1, io1)]}},
+        io3 = {'_name': 'object', '_start': null, 'body': {'values': [keyval(is1, in4)]}},
+        io4 = {'_name': 'object', '_start': null, 'body': {'values': [keyval(is1, in1), keyval(is1, io1)]}};
     
     test("simple number", function() {
         deepEqual(JT.t_value(in1),
@@ -124,7 +127,7 @@ module("treechecker", function() {
     test("top-level: object or array", function() {
         var message = 'top-level element should be object or array';
         function makeJson(obj) {
-            return {'value': obj, '_state': [1, 3], '_name': 'json'};
+            return {'value': obj, '_start': [1, 3], '_name': 'json'};
         }
         deepEqual(JT.t_json(makeJson(in4)),
                   JT.ret_err([e('number', 'overflow', '8e+872', [2,4]),
