@@ -1,3 +1,4 @@
+/* globals describe: false, it: false */
 "use strict";
 
 var V = require('../index'),

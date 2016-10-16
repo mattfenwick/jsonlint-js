@@ -1,3 +1,4 @@
+/* globals describe: false, it: false */
 "use strict";
 
 var JT = require('../lib/treechecker'),
