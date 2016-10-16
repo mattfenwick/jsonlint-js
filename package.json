@@ -10,13 +10,10 @@
     "unparse-js": "0.3.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-jshint": "~0.9.2",
     "mocha": "1.18.2"
   },
   "scripts": {
-    "grunt": "grunt --force",
+    "lint": "jshint --verbose lib/**.js test/**.js",
     "test": "mocha --reporter spec"
   },
   "repository": {
